@@ -1,7 +1,7 @@
 import { commands } from "./commands";
 import { receivedMessage  } from "./interfaces/receivedMessage";
 
-export function messageProcessor(message: receivedMessage ) {
+export async function messageProcessor(message: receivedMessage ) {
   commands.forEach(command => {
     if (command.name === message.command) {
       command.handler(message);

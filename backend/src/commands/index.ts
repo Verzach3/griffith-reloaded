@@ -6,7 +6,7 @@ import { ytdlh } from "./ytdl";
 export const commands = [
   {
     name: "help",
-    aliases: ["commands", "cmds", "command", "cmd", "ayuda"],
+    aliases: ["commands", "cmds", "command", "cmd", "ayuda", "comandos"],
     handler: help,
     description: "Muestra la esta lista de comandos",
     usage: "help"
