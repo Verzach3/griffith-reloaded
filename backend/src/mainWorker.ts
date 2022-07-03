@@ -1,5 +1,5 @@
 import { Queue, Worker } from "bullmq"
-import { receiveMessage } from "./interfaces/receiveMessage"
+import { receivedMessage } from "./interfaces/receivedMessage"
 
 const sendQueue = new Queue("send-queue", {
   connection: {
@@ -9,7 +9,7 @@ const sendQueue = new Queue("send-queue", {
 })
 
 const worker = new Worker("receive-queue", async (job) => {
-  const data = job.data as receiveMessage
+  const data = job.data as receivedMessage
   console.log(job.data)
 }, {
   connection: {

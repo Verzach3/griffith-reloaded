@@ -9,7 +9,7 @@ import { mkdirSync } from "fs";
 import { writeFile } from "fs/promises";
 import { nanoid } from "nanoid";
 import { MessageWrapper } from "./classes/messageWrapper";
-import { receiveMessage } from "./interfaces/receiveMessage";
+import { receivedMessage } from "./interfaces/receivedMessage";
 import { startSock } from "./socket";
 
 try {
@@ -101,7 +101,7 @@ const startBot = async () => {
         }
       }
 
-      let messageTask : receiveMessage = {
+      let messageTask : receivedMessage = {
         from: message.getChatSender(),
         command: message.getText()!.replace("!", "").split(" ")[0],
         args: message.getText()!.replace("!", "").split(" ").slice(1),

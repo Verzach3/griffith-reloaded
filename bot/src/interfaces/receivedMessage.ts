@@ -1,4 +1,4 @@
-export interface receiveMessage {
+export interface receivedMessage {
   from: string;
   command: string;
   args: string[];

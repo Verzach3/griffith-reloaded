@@ -12,11 +12,13 @@
     "dev:worker": "concurrently -n worker \"nodemon dist/mainWorker.js\""
   },
   "dependencies": {
-    "@types/sharp": "^0.30.4",
     "bullmq": "^1.86.3",
+    "sharp": "^0.30.7"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4",
     "concurrently": "^7.2.2",
     "nodemon": "^2.0.18",
-    "sharp": "^0.30.7",
-    "typescript": "^4.7.4"
+    "@types/sharp": "^0.30.4"
   }
 }
