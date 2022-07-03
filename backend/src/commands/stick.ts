@@ -10,7 +10,6 @@ export async function stick(message: receivedMessage) {
   }
 
   let isAnimated = false;
-  console.log(statSync("../media/" + message.mediaPath!));
   if (message.mediaPath?.endsWith(".mp4")) {
     await new Promise((resolve, reject) => {
       ff("../media/" + message.mediaPath)
@@ -54,4 +53,5 @@ export async function stick(message: receivedMessage) {
     "sticker",
     "../media/" + message.mediaPath?.split(".")[0] + "-final-.webp"
   );
+  console.log(`Sended sticker to ${message.from} file: ${message.mediaPath}`);
 }

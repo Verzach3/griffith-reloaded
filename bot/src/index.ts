@@ -1,8 +1,3 @@
-import {
-  AnyMessageContent,
-  delay,
-  downloadMediaMessage,
-} from "@adiwajshing/baileys";
 import { Queue, Worker } from "bullmq";
 import chalk from "chalk";
 import { mkdirSync, statSync } from "fs";
@@ -12,7 +7,6 @@ import { MessageWrapper } from "./classes/messageWrapper";
 import { receivedMessage } from "./interfaces/receivedMessage";
 import { sendedMessage } from "./interfaces/sendedMessage";
 import { startSock } from "./socket";
-import { sleep } from "./util/sleep";
 
 try {
   mkdirSync("../media/");
@@ -43,6 +37,27 @@ const startBot = async () => {
             sticker: await readFile(data.mediaPath),
           });
           console.log(chalk.green(`sent sticker: ${data.mediaPath}`));
+          break;
+        case "audio":
+          await socket.sendMessage(data.to, {
+            audio: await readFile(data.mediaPath),
+          });
+          console.log(chalk.green(`sent audio: ${data.mediaPath}`));
+          break;
+        case "video":
+          await socket.sendMessage(data.to, {
+            video: await readFile(data.mediaPath),
+          });
+          console.log(chalk.green(`sent video: ${data.mediaPath}`));
+          break;
+        case "image":
+          await socket.sendMessage(data.to, {
+            image: await readFile(data.mediaPath),
+          });
+          console.log(chalk.green(`sent image: ${data.mediaPath}`));
+          break;
+        default:
+          console.log(chalk.red(`unknown message type: ${data.type}`));
           break;
       }
     },

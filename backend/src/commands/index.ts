@@ -1,7 +1,16 @@
-import ping from "./ping"
-import { stick } from "./stick"
+import { help } from "./help";
+import ping from "./ping";
+import { stick } from "./stick";
+import { ytdlh } from "./ytdl";
 
 export const commands = [
+  {
+    name: "help",
+    aliases: ["commands", "cmds", "command", "cmd", "ayuda"],
+    handler: help,
+    description: "Muestra la esta lista de comandos",
+    usage: "help"
+  },
   {
     name: "ping",
     handler: ping,
@@ -17,5 +26,14 @@ export const commands = [
     usage: "stick",
     aliases: ["sticker", "st", "stk"],
     category: "general",
-  }
-]
+  },
+  {
+    name: "ytdl",
+    handler: ytdlh,
+    description: "Descarga un video de youtube con el link",
+    usage: "ytdl <link>",
+    aliases: ["youtube", "yt"],
+    category: "general",
+  },
+];
+

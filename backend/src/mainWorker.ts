@@ -20,6 +20,6 @@ const worker = new Worker("receive-queue", async (job) => {
   connection: {
     host: "localhost",
     port: 6379,
-}})
+}, concurrency: 4})
 
 console.log("Worker started")

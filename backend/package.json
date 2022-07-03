@@ -15,7 +15,8 @@
     "bullmq": "^1.86.3",
     "fluent-ffmpeg": "^2.1.2",
     "nanoid": "3.3.4",
-    "sharp": "^0.30.7"
+    "sharp": "^0.30.7",
+    "ytdl-core": "^4.11.0"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.20",
