@@ -115,10 +115,8 @@ export class MessageWrapper {
 
   getText(): string | undefined {
     if (this.hasMedia()) {
+      console.log("returned caption");
       return this.getMediaMessage()?.caption!;
-    }
-    if (this.hasMentionedMedia()) {
-      return this.getMentionedMediaMessage()?.caption!;
     }
     if (this.message.message?.extendedTextMessage?.text) {
       return this.message.message.extendedTextMessage.text;

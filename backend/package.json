@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "author": "Verzach3",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "watch": "tsc -w",
     "dev:queue": "concurrently -n queue \"nodemon dist/mainQueue.js\"",
@@ -13,12 +13,16 @@
   },
   "dependencies": {
     "bullmq": "^1.86.3",
+    "fluent-ffmpeg": "^2.1.2",
+    "nanoid": "3.3.4",
     "sharp": "^0.30.7"
   },
   "devDependencies": {
-    "typescript": "^4.7.4",
+    "@types/fluent-ffmpeg": "^2.1.20",
+    "@types/node": "^18.0.1",
+    "@types/sharp": "^0.30.4",
     "concurrently": "^7.2.2",
     "nodemon": "^2.0.18",
-    "@types/sharp": "^0.30.4"
+    "typescript": "^4.7.4"
   }
 }

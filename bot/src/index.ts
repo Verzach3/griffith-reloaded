@@ -5,12 +5,14 @@ import {
 } from "@adiwajshing/baileys";
 import { Queue, Worker } from "bullmq";
 import chalk from "chalk";
-import { mkdirSync } from "fs";
-import { writeFile } from "fs/promises";
+import { mkdirSync, statSync } from "fs";
+import { readFile, writeFile } from "fs/promises";
 import { nanoid } from "nanoid";
 import { MessageWrapper } from "./classes/messageWrapper";
 import { receivedMessage } from "./interfaces/receivedMessage";
+import { sendedMessage } from "./interfaces/sendedMessage";
 import { startSock } from "./socket";
+import { sleep } from "./util/sleep";
 
 try {
   mkdirSync("../media/");
@@ -30,13 +32,18 @@ const startBot = async () => {
   const sendWorker = new Worker(
     "send-queue",
     async (job) => {
-      console.log(chalk.green(`sending message: ${job.data}`));
-      if (job.data.type === "text") {
-        try {
-          await socket.sendMessage(job.data.to, { text: job.data.body });
-        } catch (error) {
-          console.log(chalk.red(`error sending message: ${error}`));
-        }
+      const data: sendedMessage = job.data;
+      switch (data.type) {
+        case "text":
+          await socket.sendMessage(data.to, { text: data.message });
+          console.log(chalk.green(`sent message: ${data.message}`));
+          break;
+        case "sticker":
+          await socket.sendMessage(data.to, {
+            sticker: await readFile(data.mediaPath),
+          });
+          console.log(chalk.green(`sent sticker: ${data.mediaPath}`));
+          break;
       }
     },
     {
@@ -85,6 +92,7 @@ const startBot = async () => {
           console.log(chalk.blue(`downloading media...`));
           const buffer = await message.downloadMedia();
           await writeFile(`../media/${filename}`, buffer);
+          console.log("media downloaded");
         } catch (error) {
           console.log(chalk.red(`error downloading media: ${error}`));
         }
@@ -96,21 +104,30 @@ const startBot = async () => {
           console.log(chalk.blue(`downloading media...`));
           const buffer = await message.downloadMentionedMedia();
           await writeFile(`../media/${filename}`, buffer!);
+          console.log("media downloaded");
         } catch (error) {
           console.log(chalk.red(`error downloading media: ${error}`));
         }
       }
 
-      let messageTask : receivedMessage = {
+      let messageTask: receivedMessage = {
         from: message.getChatSender(),
         command: message.getText()!.replace("!", "").split(" ")[0],
         args: message.getText()!.replace("!", "").split(" ").slice(1),
         hasMedia: media,
         mediaPath: filename || "",
-      }
+      };
 
-      receiveQueue.add(nanoid(),messageTask);
-
+      receiveQueue.add(nanoid(), messageTask, {
+        attempts: 3,
+        backoff: {
+          type: "exponential",
+          delay: 1000,
+        },
+      });
+      console.log(
+        chalk.green(`added job to queue: ${JSON.stringify(messageTask)}`)
+      );
     }
   });
 
