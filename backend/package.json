@@ -1,0 +1,22 @@
+{
+  "name": "griffith-backend",
+  "version": "1.0.0",
+  "description": "A backend for the griffith bot, contains the queue and the workers to process messages without blocking the bot",
+  "main": "src/index.ts",
+  "author": "Verzach3",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "watch": "tsc -w",
+    "dev:queue": "concurrently -n queue \"nodemon dist/mainQueue.js\"",
+    "dev:worker": "concurrently -n worker \"nodemon dist/mainWorker.js\""
+  },
+  "dependencies": {
+    "@types/sharp": "^0.30.4",
+    "bullmq": "^1.86.3",
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.18",
+    "sharp": "^0.30.7",
+    "typescript": "^4.7.4"
+  }
+}
