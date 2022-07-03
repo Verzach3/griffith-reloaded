@@ -12,8 +12,8 @@ const sendQueue = new Queue("send-queue", {
 globalThis.globalSendQueue = sendQueue;
 
 const worker = new Worker("receive-queue", async (job) => {
+  console.log("Received job", job.data);
   const data = job.data as receivedMessage
-  console.log(job.data)
   messageProcessor(data)
 
 }, {
