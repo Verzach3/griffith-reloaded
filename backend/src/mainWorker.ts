@@ -11,10 +11,14 @@ const sendQueue = new Queue("send-queue", {
 
 globalThis.globalSendQueue = sendQueue;
 
-const worker = new Worker("receive-queue", async (job) => {
+const worker = new Worker("receive-queue", async (job: { data: receivedMessage; }) => {
   console.log("Received job", job.data);
-  const data = job.data as receivedMessage
-  messageProcessor(data)
+  try {
+    const data = job.data as receivedMessage
+    messageProcessor(data)    
+  } catch (error) {
+    throw error
+  }
 
 }, {
   connection: {
