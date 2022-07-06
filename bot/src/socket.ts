@@ -36,13 +36,7 @@ export const startSock = async () => {
     logger: pinoLogger,
     printQRInTerminal: true,
     auth: state,
-    msgRetryCounterMap,
-    // implement to handle retries
-    getMessage: async (key) => {
-      return {
-        conversation: "hello",
-      };
-    },
+    msgRetryCounterMap
   });
 
   store.bind(sock.ev);
