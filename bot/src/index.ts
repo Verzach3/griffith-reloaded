@@ -56,7 +56,7 @@ const startBot = async () => {
           case "audio":
             try {
               await socket.sendMessage(data.to, {
-                audio: await readFile(data.mediaPath),
+                audio: await readFile(data.mediaPath), mimetype: "audio/mp4"
               });
               done(null, `audio sent: ${data.mediaPath}`);
               console.log(chalk.green(`sent audio: ${data.mediaPath}`));
