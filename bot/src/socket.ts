@@ -2,6 +2,7 @@ import { Boom } from "@hapi/boom";
 import makeWASocket, {
   DisconnectReason,
   fetchLatestBaileysVersion,
+  makeInMemoryStore,
   MessageRetryMap,
   useMultiFileAuthState,
 } from "@verzach3/baileys";
@@ -17,7 +18,12 @@ pinoLogger.level = silent ? "silent" : "trace";
 const msgRetryCounterMap: MessageRetryMap = {};
 // the store maintains the data of the WA connection in memory
 // can be written out to a file & read from it
+const store = makeInMemoryStore({ logger: pinoLogger });
+store.readFromFile("./baileys_store_multi.json");
 // save every 10s
+setInterval(() => {
+  store.writeToFile("./baileys_store_multi.json");
+}, 10000);
 // start a connection
 export const startSock = async () => {
   const { state, saveCreds } = await useMultiFileAuthState("baileys_auth_info");
@@ -38,6 +44,8 @@ export const startSock = async () => {
       };
     },
   });
+
+  store.bind(sock.ev);
 
   // const sendMessageWTyping = async(msg: AnyMessageContent, jid: string) => {
   // 	await sock.presenceSubscribe(jid)
