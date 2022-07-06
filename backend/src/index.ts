@@ -2,8 +2,12 @@ import Queue from "bee-queue";
 import chalk from "chalk";
 import { receivedMessage } from "./interfaces/receivedMessage";
 import { messageProcessor } from "./messageProcessor";
+
+console.log("starting backend");
 const sendQueue = new Queue("send-queue");
+console.log(chalk.green("send-queue started"));
 const receiveQueue = new Queue("receive-queue");
+console.log(chalk.green("receive-queue started"));
 globalThis.globalSendQueue = sendQueue;
 
 const worker = receiveQueue.process(10,
@@ -22,3 +26,4 @@ const worker = receiveQueue.process(10,
     }
   }
 );
+console.log(chalk.green("receive-queue worker started"));
