@@ -4,7 +4,7 @@ import makeWASocket, {
   fetchLatestBaileysVersion,
   MessageRetryMap,
   useMultiFileAuthState,
-} from "@adiwajshing/baileys";
+} from "@verzach3/baileys";
 import { logger } from "./logger";
 
 const pinoLogger = logger.child({}) ;

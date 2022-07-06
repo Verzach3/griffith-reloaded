@@ -2,7 +2,7 @@ import {
   downloadContentFromMessage,
   downloadMediaMessage,
   proto,
-} from "@adiwajshing/baileys";
+} from "@verzach3/baileys";
 import { Transform } from "node:stream";
 export class MessageWrapper {
   message: proto.IWebMessageInfo;

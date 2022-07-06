@@ -8,7 +8,7 @@
   "type": "commonjs",
   "scripts": {
     "watch": "tsc -w",
-    "dev" : "concurrently -n worker,tsc --kill-others \"nodemon dist/index.js\" \"tsc -w\"",
+    "dev": "concurrently -n worker,tsc --kill-others \"nodemon dist/index.js\" \"tsc -w\"",
     "dev:queue": "concurrently -n queue \"nodemon dist/mainQueue.js\"",
     "dev:worker": "concurrently -n worker \"nodemon dist/mainWorker.js\""
   },
