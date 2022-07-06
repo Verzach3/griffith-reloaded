@@ -59,7 +59,7 @@ export const startSock = async () => {
   // sock.ev.on('messages.set', item => console.log(`recv ${item.messages.length} messages (is latest: ${item.isLatest})`))
   // sock.ev.on('contacts.set', item => console.log(`recv ${item.contacts.length} contacts`))
   sock.ev.on("messages.upsert", async (m) => {
-    console.log(JSON.stringify(m, undefined, 2));
+    // console.log(JSON.stringify(m, undefined, 2));
 
     // const msg = m.messages[0]
     // if(!msg.key.fromMe && m.type === 'notify' && doReplies) {
