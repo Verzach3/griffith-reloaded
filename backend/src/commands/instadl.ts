@@ -33,8 +33,8 @@ export async function instadl(message: receivedMessage) {
       .filter((val) => val.includes("Title"))
       .map((val) => val.split(":")[1])
       .map((val) => val.trim())
-      .map((val) => val.replace("[", "("))
-      .map((val) => val.replace("]", ")"));
+      // .map((val) => val.replace("[", "("))
+      // .map((val) => val.replace("]", ")"));
 
     console.log(filenames);
   } catch (error) {
