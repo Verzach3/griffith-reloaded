@@ -20,7 +20,7 @@ const startBot = async () => {
 
   const createWorker = () => {
     console.log(chalk.green("worker created"));
-    sendQueue?.process(
+    sendQueue?.process(4,
       async (
         job: Queue.Job<sendedMessage>,
         done: Queue.DoneCallback<string>
