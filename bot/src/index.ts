@@ -14,49 +14,91 @@ try {
 }
 const startBot = async () => {
   // create bullmq queue
-  let sendQueue: Queue<any> | undefined = undefined
+  let sendQueue: Queue<any> | undefined = undefined;
   const receiveQueue = new Queue("receive-queue");
   const socket = await startSock();
 
   const createWorker = () => {
     console.log(chalk.green("worker created"));
-    sendQueue?.process(async (job: Queue.Job<sendedMessage>, done: Queue.DoneCallback<string>) => {
-    const data = job.data;
-    switch (data.type) {
-      case "text":
-        await socket.sendMessage(data.to, { text: data.message });
-        console.log(chalk.green(`sent message: ${data.message}`));
-        break;
-      case "sticker":
-        await socket.sendMessage(data.to, {
-          sticker: await readFile(data.mediaPath),
-        });
-        console.log(chalk.green(`sent sticker: ${data.mediaPath}`));
-        break;
-      case "audio":
-        await socket.sendMessage(data.to, {
-          audio: await readFile(data.mediaPath),
-        });
-        console.log(chalk.green(`sent audio: ${data.mediaPath}`));
-        break;
-      case "video":
-        await socket.sendMessage(data.to, {
-          video: await readFile(data.mediaPath),
-        });
-        console.log(chalk.green(`sent video: ${data.mediaPath}`));
-        break;
-      case "image":
-        await socket.sendMessage(data.to, {
-          image: await readFile(data.mediaPath),
-        });
-        console.log(chalk.green(`sent image: ${data.mediaPath}`));
-        break;
-      default:
-        console.log(chalk.red(`unknown message type: ${data.type}`));
-        break;
-    }
-  });
-}
+    sendQueue?.process(
+      async (
+        job: Queue.Job<sendedMessage>,
+        done: Queue.DoneCallback<string>
+      ) => {
+        const data = job.data;
+        switch (data.type) {
+          case "text":
+            try {
+              await socket.sendMessage(data.to, { text: data.message });
+              done(null, "message sent");
+              console.log(chalk.green("message sent: " + data.message));
+            } catch (error) {
+              if (error instanceof Error) {
+                done(error);
+              }
+            }
+            console.log(chalk.green(`sent message: ${data.message}`));
+            break;
+          case "sticker":
+            try {
+              await socket.sendMessage(data.to, {
+                sticker: await readFile(data.mediaPath),
+              });
+              done(null, `sticker sent: ${data.mediaPath}`);
+              console.log(chalk.green(`sent sticker: ${data.mediaPath}`));
+            } catch (error) {
+              if (error instanceof Error) {
+                done(error);
+              }
+            }
+            break;
+          case "audio":
+            try {
+              await socket.sendMessage(data.to, {
+                audio: await readFile(data.mediaPath),
+              });
+              done(null, `audio sent: ${data.mediaPath}`);
+              console.log(chalk.green(`sent audio: ${data.mediaPath}`));
+            } catch (error) {
+              if (error instanceof Error) {
+                done(error);
+              }
+            }
+
+            break;
+          case "video":
+            try {
+              await socket.sendMessage(data.to, {
+                video: await readFile(data.mediaPath),
+              });
+              done(null, `video sent: ${data.mediaPath}`);
+              console.log(chalk.green(`sent video: ${data.mediaPath}`));
+            } catch (error) {
+              if (error instanceof Error) {
+                done(error);
+              }
+            }
+            break;
+          case "image":
+            try {
+              await socket.sendMessage(data.to, {
+                image: await readFile(data.mediaPath),
+              });
+              done(null, `image sent: ${data.mediaPath}`);
+              console.log(chalk.green(`sent image: ${data.mediaPath}`));
+            } catch (error) {
+              if (error instanceof Error) {
+                done(error);
+              }
+            }
+            break;
+          default:
+            console.log(chalk.red(`unknown message type: ${data.type}`));
+            break;
+        }
+      }
+    );
+  };
 
   socket.ev.on("connection.update", (update) => {
     if (update.connection === "close") {
@@ -138,8 +180,8 @@ const startBot = async () => {
       });
 
       job.on("failed", (error: any) => {
-      console.log(chalk.red("Job failed: "), error);
-    });
+        console.log(chalk.red("Job failed: "), error);
+      });
     }
   });
 
