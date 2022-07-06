@@ -6,7 +6,7 @@ const sendQueue = new Queue("send-queue");
 const receiveQueue = new Queue("receive-queue");
 globalThis.globalSendQueue = sendQueue;
 
-const worker = receiveQueue.process(
+const worker = receiveQueue.process(10,
   async (job: Queue.Job<receivedMessage>, done: Queue.DoneCallback<string>) => {
 
 
