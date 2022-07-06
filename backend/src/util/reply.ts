@@ -1,9 +1,7 @@
-import { Queue } from "bullmq";
-import {nanoid} from "nanoid";
 import { receivedMessage } from "../interfaces/receivedMessage";
 import { sendedMessage } from "../interfaces/sendedMessage";
 
-export default function reply(message: receivedMessage, reply: string, type?: "text" | "image" | "video" | "audio" | "sticker", mediaPath?: string) {
+export default async function reply(message: receivedMessage, reply: string, type?: "text" | "image" | "video" | "audio" | "sticker", mediaPath?: string) {
   if (type === undefined) {
     type = "text";
   }
@@ -17,5 +15,5 @@ export default function reply(message: receivedMessage, reply: string, type?: "t
     hasMedia: false,
     mediaPath: mediaPath
   };
-  globalSendQueue.add(nanoid() + message.from, replyMessage);
+  await globalSendQueue.createJob(replyMessage).save();
 }

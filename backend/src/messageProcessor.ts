@@ -2,12 +2,12 @@ import { commands } from "./commands";
 import { receivedMessage  } from "./interfaces/receivedMessage";
 
 export async function messageProcessor(message: receivedMessage ) {
-  commands.forEach(command => {
+  commands.forEach(async command => {
     if (command.name === message.command) {
       command.handler(message);
     }
   });
-  commands.forEach(command => {
+  commands.forEach(async command => {
     if (command.aliases.includes(message.command)) {
       command.handler(message);
     }

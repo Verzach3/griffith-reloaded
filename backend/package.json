@@ -8,10 +8,12 @@
   "type": "commonjs",
   "scripts": {
     "watch": "tsc -w",
+    "dev" : "concurrently -n worker,tsc --kill-others \"nodemon dist/index.js\" \"tsc -w\"",
     "dev:queue": "concurrently -n queue \"nodemon dist/mainQueue.js\"",
     "dev:worker": "concurrently -n worker \"nodemon dist/mainWorker.js\""
   },
   "dependencies": {
+    "bee-queue": "^1.4.0",
     "bullmq": "^1.86.3",
     "fluent-ffmpeg": "^2.1.2",
     "nanoid": "3.3.4",

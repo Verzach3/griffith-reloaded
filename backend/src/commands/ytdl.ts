@@ -14,21 +14,21 @@ export async function ytdlh(message: receivedMessage) {
   if (ytdl.validateURL(message.args[0])) {
     reply(message, "Link valido, descargando video...");
     const info = await ytdl.getInfo(message.args[0]);
-      const format = ytdl.chooseFormat(
-        info.formats.filter((f) => f.qualityLabel === "360p"),
-        { quality: "highestvideo" }
-      );
-      await new Promise((resolve, reject) => {
-        ytdl
-          .downloadFromInfo(info, { format: format })
-          .pipe(createWriteStream(`../media/${filename}.mp4`))
-          .on("error", reject)
-          .on("finish", resolve);
-      });
-      reply(message, "Video descargado, enviando...");
-      reply(message, "", "video", `../media/${filename}.mp4`);
-      console.log(`Sended video to ${message.from} file: ${filename}`);
-      return;
+    const format = ytdl.chooseFormat(
+      info.formats.filter((f) => f.qualityLabel === "360p"),
+      { quality: "highestvideo" }
+    );
+    await new Promise((resolve, reject) => {
+      ytdl
+        .downloadFromInfo(info, { format: format })
+        .pipe(createWriteStream(`../media/${filename}.mp4`))
+        .on("error", reject)
+        .on("finish", resolve);
+    });
+    reply(message, "Video descargado, enviando...");
+    reply(message, "", "video", `../media/${filename}.mp4`);
+    console.log(`Sended video to ${message.from} file: ${filename}`);
+    return;
   } else if (ytdl.validateURL(message.args[1])) {
     if (message.args[0] !== "audio" && message.args[0] !== "video") {
       reply(message, "Link valido, pero argumento invalido");

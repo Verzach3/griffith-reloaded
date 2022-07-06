@@ -1,5 +1,6 @@
 import { help } from "./help";
 import ping from "./ping";
+import { random } from "./random";
 import { stick } from "./stick";
 import { ytdlh } from "./ytdl";
 
@@ -35,5 +36,13 @@ export const commands = [
     aliases: ["youtube", "yt"],
     category: "general",
   },
+  {
+    name: "random",
+    handler: random,
+    description: "Genera un numero aleatorio entre un rango, si no se especifica un rango, se genera un numero entre 0 y 10",
+    usage: "random <min> <max>",
+    aliases: ["rand", "rnd"],
+    category: "general",
+  }
 ];
 

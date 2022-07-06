@@ -1,6 +1,6 @@
-import {Queue} from "bullmq";
+import BeeQueue from "bee-queue";
 declare global {
-  var globalSendQueue: Queue<any, any, string>;
+  var globalSendQueue: BeeQueue<any>;
 }
 
 export {};

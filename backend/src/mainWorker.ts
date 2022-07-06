@@ -9,7 +9,7 @@ const sendQueue = new Queue("send-queue", {
   }
 })
 
-globalThis.globalSendQueue = sendQueue;
+// globalThis.globalSendQueue = sendQueue;
 
 const worker = new Worker("receive-queue", async (job: { data: receivedMessage; }) => {
   console.log("Received job", job.data);
