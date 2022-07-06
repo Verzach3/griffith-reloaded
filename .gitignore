@@ -5,3 +5,11 @@ baileys_auth_info
 baileys_store_multi.json
 tsconfig.tsbuildinfo
 yarn-error.log
+
+*.jpg
+
+*.mp4
+
+cookies/instagram.txt
+
+backend/instagram-cookies.txt

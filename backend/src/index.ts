@@ -10,7 +10,7 @@ const receiveQueue = new Queue("receive-queue");
 console.log(chalk.green("receive-queue started"));
 globalThis.globalSendQueue = sendQueue;
 
-const worker = receiveQueue.process(10,
+const worker = receiveQueue.process(15,
   async (job: Queue.Job<receivedMessage>, done: Queue.DoneCallback<string>) => {
 
 
