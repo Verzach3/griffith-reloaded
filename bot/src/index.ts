@@ -25,6 +25,7 @@ const startBot = async () => {
         job: Queue.Job<sendedMessage>,
         done: Queue.DoneCallback<string>
       ) => {
+        console.log(`processing job ${job.id} with data`, job.data);
         const data = job.data;
         switch (data.type) {
           case "text":
