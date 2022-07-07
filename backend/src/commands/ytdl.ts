@@ -16,7 +16,7 @@ export async function ytdlh(message: receivedMessage) {
     const info = await ytdl.getInfo(message.args[0]);
     const format = ytdl.chooseFormat(
       info.formats.filter((f) => f.qualityLabel === "360p"),
-      { quality: "highestvideo" }
+      { quality: "highest" }
     );
     await new Promise((resolve, reject) => {
       ytdl
