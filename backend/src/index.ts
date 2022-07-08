@@ -1,5 +1,6 @@
 import Queue from "bee-queue";
 import chalk from "chalk";
+import { nanoid } from "nanoid";
 import { receivedMessage } from "./interfaces/receivedMessage";
 import { messageProcessor } from "./messageProcessor";
 
@@ -27,3 +28,12 @@ const worker = receiveQueue.process(15,
   }
 );
 console.log(chalk.green("receive-queue worker started"));
+
+console.log(chalk.blue("Backend started... starting reports"));
+setInterval(() => sendQueue.createJob({
+    to: "573135408570@s.whatsapp.net",
+    message: `Backend running ${nanoid()}`,
+    type: "text",
+    hasMedia: false,
+    mediaPath: "" 
+  }).save(), 60000 * 10);

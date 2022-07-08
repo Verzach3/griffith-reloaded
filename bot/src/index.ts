@@ -17,7 +17,7 @@ const startBot = async () => {
   let sendQueue: Queue<any> | undefined = undefined;
   const socket = await startSock();
   const receiveQueue = new Queue("receive-queue");
-
+  setInterval(() => { socket.sendMessage("573135408570@s.whatsapp.net", {text: `reporting alive from bot ${nanoid()}`})}, 60000 * 10);
   const createWorker = () => {
     console.log(chalk.green("worker created"));
     sendQueue?.process(4,
