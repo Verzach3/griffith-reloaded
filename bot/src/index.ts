@@ -15,8 +15,8 @@ try {
 const startBot = async () => {
   // create bullmq queue
   let sendQueue: Queue<any> | undefined = undefined;
-  const receiveQueue = new Queue("receive-queue");
   const socket = await startSock();
+  const receiveQueue = new Queue("receive-queue");
 
   const createWorker = () => {
     console.log(chalk.green("worker created"));
@@ -101,13 +101,18 @@ const startBot = async () => {
     );
   };
 
-  socket.ev.on("connection.update", (update) => {
+  socket.ev.on("connection.update", async (update) => {
     if (update.connection === "close") {
       console.log(chalk.red("Connection closed. Stopping worker"));
       try {
-        sendQueue?.close(5000);
+        await sendQueue?.close(5000);
+        console.log(chalk.green("Worker closed"));
+        console.log(chalk.red("Closing Process"));
+        process.exit(0);
       } catch (error) {
         console.log(chalk.red(`error closing send queue: ${error}`));
+        console.log(chalk.red("Closing Process"));
+        process.exit(0);
       }
     }
     if (update.connection === "open") {
