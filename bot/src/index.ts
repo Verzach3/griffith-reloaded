@@ -12,6 +12,20 @@ try {
 } catch (error) {
   console.log(chalk.yellow(`error creating media directory: ${error}`));
 }
+
+const allowed = [
+  "5214772749447-1548133775@g.us",
+  "50499955791-1584147817@g.us",
+  "50250978015-1634270767@g.us",
+  "573232908484-1625433311@g.us",
+  "120363025486848216@g.us",
+  "50762700971-1573447408@g.us",
+  "50762700971-1573447408@g.us",
+  "573135408570@s.whatsapp.net",
+
+
+]
+
 const startBot = async () => {
   // create bullmq queue
   let sendQueue: Queue<any> | undefined = undefined;
@@ -134,7 +148,7 @@ const startBot = async () => {
     console.log(
       chalk.blue(`has media mentioned: ${message.hasMentionedMedia()}`)
     );
-    if (message.getText()?.toLowerCase().startsWith(".")) {
+    if (message.getText()?.toLowerCase().startsWith(".") && allowed.includes(message.getChatSender())) {
       let filename = undefined;
       let media = false;
       if (message.hasMedia()) {
@@ -170,6 +184,11 @@ const startBot = async () => {
         mediaPath: filename || "",
       };
 
+      if (messageTask.command === "#add") {
+        allowed.push(messageTask.args[0]);
+        console.log(chalk.green(`added user to temp whitelist ${messageTask.args[0]}`));
+        return
+      }
       const job = await receiveQueue
         .createJob(messageTask)
         .retries(3)
