@@ -148,6 +148,7 @@ const startBot = async () => {
     console.log(
       chalk.blue(`has media mentioned: ${message.hasMentionedMedia()}`)
     );
+    console.log(`message from ${message.getChatSender()}`);
     if (message.getText()?.toLowerCase().startsWith(".") && allowed.includes(message.getChatSender())) {
       let filename = undefined;
       let media = false;
