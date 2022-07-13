@@ -134,7 +134,7 @@ const startBot = async () => {
     console.log(
       chalk.blue(`has media mentioned: ${message.hasMentionedMedia()}`)
     );
-    if (message.getText()?.startsWith("!")) {
+    if (message.getText()?.toLowerCase().startsWith(".")) {
       let filename = undefined;
       let media = false;
       if (message.hasMedia()) {
