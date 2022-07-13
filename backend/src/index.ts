@@ -36,4 +36,4 @@ setInterval(() => sendQueue.createJob({
     type: "text",
     hasMedia: false,
     mediaPath: "" 
-  }).save(), 60000 * 10);
+  }).save(), 18000000);
