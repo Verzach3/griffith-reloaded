@@ -164,8 +164,8 @@ const startBot = async () => {
 
       let messageTask: receivedMessage = {
         from: message.getChatSender(),
-        command: message.getText()!.replace("!", "").split(" ")[0],
-        args: message.getText()!.replace("!", "").split(" ").slice(1),
+        command: message.getText()!.replace(".", "").split(" ")[0],
+        args: message.getText()!.replace(".", "").split(" ").slice(1),
         hasMedia: media,
         mediaPath: filename || "",
       };

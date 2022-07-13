@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { receivedMessage } from "../interfaces/receivedMessage";
 import reply from "../util/reply";
 import { commands } from "./index";
@@ -14,6 +15,7 @@ export function help(message: receivedMessage) {
   });
   answer.push(`
 │ Mas en camino!
+  ${nanoid(10)}
 ╰─────────────❁ཻུ۪۪⸙͎`);
   reply(message, answer.join("\n\n"));
 }
